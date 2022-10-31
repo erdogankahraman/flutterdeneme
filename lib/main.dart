@@ -12,10 +12,6 @@ void main() {
           child: Column(
             children: const <Widget>[
               Text("Resim 22221"),
-              WebView(
-                initialUrl: 'https://www.tutorialkart.com/',
-                javascriptMode: JavascriptMode.unrestricted,
-              ),
               Image(
                 image: NetworkImage(
                     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
