@@ -1,5 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'cameraExampleHome.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   foregroundColor: Colors.black87,
@@ -12,7 +15,17 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   ),
 );
 
-void main() {
+List<CameraDescription> cameras = <CameraDescription>[];
+
+void main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()` can be called before `runApp()`
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+    print(cameras);
+  } on CameraException catch (e) {
+    print(e.toString());
+  }
   runApp(MaterialApp(
     home: FirstRoute(),
   ));
@@ -169,10 +182,25 @@ class _MyAppState extends State<ThirdRoute> {
               onPressed: (int index) {
                 setState(() {
                   _selections[index] = !_selections[index];
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CameraApp()),
+                  );
                 });
               },
             ))
       ]),
     ));
+  }
+}
+class CameraApp extends StatelessWidget {
+  /// Default Constructor
+  const CameraApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: CameraExampleHome(),
+    );
   }
 }
