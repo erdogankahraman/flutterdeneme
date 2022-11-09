@@ -2,13 +2,15 @@
     package="com.example.widget">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name="${applicationName}"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="widget">
+        android:label="FalconDEV"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

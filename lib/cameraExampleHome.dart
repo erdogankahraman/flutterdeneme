@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'main.dart';
 
@@ -33,7 +35,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                      //Ön kamera kullanıyor arka kameralar 0, 2 ve 3 olmalı
+                          //Ön kamera kullanıyor arka kameralar 0, 2 ve 3 olmalı
                           TakePictureScreen(camera: cameras[1])),
                 );
               },
@@ -72,7 +74,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // Get a specific camera from the list of available cameras.
       widget.camera,
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.ultraHigh,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -110,9 +112,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
                   // Attempt to take a picture and then get the location
                   // where the image file is saved.
-                  final image = await _controller.takePicture();
+                  final image = await _controller
+                      .takePicture(); // getting a directory path for saving
+                  File file = File(image.path);
 
-
+                  final result = await ImageGallerySaver.saveImage(file.readAsBytesSync());
+                  
                   if (!mounted) return;
 
                   // If the picture was taken, display it on a new screen.
