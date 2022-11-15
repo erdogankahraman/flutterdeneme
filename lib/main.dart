@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'cameraExampleHome.dart';
+import 'geoLocation.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   foregroundColor: Colors.black87,
@@ -16,6 +17,10 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
 );
 
 List<CameraDescription> cameras = <CameraDescription>[];
+
+var resimURL =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Seal_of_the_Turkish_Navy.svg/1200px-Seal_of_the_Turkish_Navy.svg.png";
+var textTitle = "Deniz Kuvvetleri Komutanlığı";
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()` can be called before `runApp()`
@@ -45,18 +50,7 @@ class FirstRoute extends StatelessWidget {
           child: Center(
             child: Column(
               children: <Widget>[
-                const Text(
-                  "Resim 22221",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
-                ),
-                const Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                ),
+                SwitchExample(),
                 Container(
                   margin: const EdgeInsets.all(25),
                   child: TextButton(
@@ -95,6 +89,27 @@ class FirstRoute extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => ThirdRoute()),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(25),
+                  child: TextButton(
+                    style: flatButtonStyle,
+                    child: Text(
+                      'Button Harita',
+                      style: TextStyle(color: Colors.white.withOpacity(0.6)),
+                    ),
+                    onPressed: () {
+                      Fluttertoast.showToast(
+                        msg: "This is a Toast message", // message
+                        toastLength: Toast.LENGTH_SHORT, // length
+                        gravity: ToastGravity.CENTER, // location// duration
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MapExample()),
                       );
                     },
                   ),
@@ -193,6 +208,7 @@ class _MyAppState extends State<ThirdRoute> {
     ));
   }
 }
+
 class CameraApp extends StatelessWidget {
   /// Default Constructor
   const CameraApp({Key? key}) : super(key: key);
@@ -202,5 +218,68 @@ class CameraApp extends StatelessWidget {
     return const MaterialApp(
       home: CameraExampleHome(),
     );
+  }
+}
+
+class MapExample extends StatelessWidget {
+  /// Default Constructor
+  const MapExample({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: GeolocatorWidget(),
+    );
+  }
+}
+
+class SwitchExample extends StatefulWidget {
+  const SwitchExample({super.key});
+
+  @override
+  State<SwitchExample> createState() => _SwitchExampleState();
+}
+
+class _SwitchExampleState extends State<SwitchExample> {
+  bool light = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(children: <Widget>[
+      Text(
+        textTitle,
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold),
+      ),
+      Image(
+        width: 300,
+        height: 300,
+        image: NetworkImage(resimURL),
+      ),
+      Switch(
+        // This bool value toggles the switch.
+        value: light,
+        activeColor: Colors.red,
+        onChanged: (bool value) {
+          // This is called when the user toggles the switch.
+          setState(() {
+            light = value;
+            if (!light) {
+              resimURL =
+                  "https://upload.wikimedia.org/wikipedia/tr/9/95/Seal_of_the_Turkish_Armed_Forces.png";
+              textTitle = "Kara Kuvvetleri Komutanlığı";
+            } else {
+              resimURL =
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Seal_of_the_Turkish_Navy.svg/1200px-Seal_of_the_Turkish_Navy.svg.png";
+              textTitle = "Deniz Kuvvetleri Komutanlığı";
+            }
+          });
+        },
+      )
+    ]));
   }
 }
