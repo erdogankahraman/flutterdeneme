@@ -341,7 +341,7 @@ class _GeolocatorWidgetState extends State<GeolocatorWidget> {
     super.dispose();
   }
 
-  void _getLastKnownPosition() async {
+  Future<Position?> _getLastKnownPosition() async {
     final position = await _geolocatorPlatform.getLastKnownPosition();
     if (position != null) {
       _updatePositionList(
@@ -354,6 +354,8 @@ class _GeolocatorWidgetState extends State<GeolocatorWidget> {
         'No last known position available',
       );
     }
+
+    return position;
   }
 
   void _getLocationAccuracy() async {

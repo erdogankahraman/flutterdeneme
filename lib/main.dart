@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'cameraExampleHome.dart';
 import 'geoLocation.dart';
+import 'harita.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   foregroundColor: Colors.black87,
@@ -98,7 +99,7 @@ class FirstRoute extends StatelessWidget {
                   child: TextButton(
                     style: flatButtonStyle,
                     child: Text(
-                      'Button Harita',
+                      'Button Konum',
                       style: TextStyle(color: Colors.white.withOpacity(0.6)),
                     ),
                     onPressed: () {
@@ -114,6 +115,30 @@ class FirstRoute extends StatelessWidget {
                     },
                   ),
                 ),
+                Container(
+                  height: 100,
+                  color: Color.fromARGB(100, 200, 200, 200),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        style: flatButtonStyle,
+                        child: Text(
+                          'Haritayı Aç',
+                          style: TextStyle(color: Colors.white.withOpacity(0.6)),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HaritaExample()),
+                          );
+                        },
+                      ),
+                      Icon(Icons.map),
+                    ],
+
+                  ),
+                )
               ],
             ),
           ),
@@ -229,6 +254,18 @@ class MapExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: GeolocatorWidget(),
+    );
+  }
+}
+
+class HaritaExample extends StatelessWidget {
+  /// Default Constructor
+  const HaritaExample({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MyApp(),
     );
   }
 }
